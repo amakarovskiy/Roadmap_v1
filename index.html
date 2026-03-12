@@ -40,9 +40,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
   <!-- App CSS -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/panel.css">
@@ -215,7 +212,6 @@
 
   <!-- ===== HERO ===== -->
   <div class="hero">
-    <img src="img/phuket-map.svg" alt="" class="hero-map" aria-hidden="true">
     <span class="hero-title">🗺️ Планировщик маршрутов <span class="hero-accent">ПХУКЕТА</span></span>
     <span class="hero-sep">|</span>
     <span>Выбери места → получи маршрут с расчётом времени и бензина</span>
@@ -293,8 +289,56 @@
       </div>
     </aside>
 
-    <!-- MAP -->
-    <div id="map"></div>
+    <!-- MAP (custom SVG) -->
+    <div id="map">
+      <svg id="map-svg" viewBox="0 0 600 1000" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="areaGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#22cc66" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#22cc66" stop-opacity="0.03"/>
+          </radialGradient>
+          <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Island shape -->
+        <g id="island-layer"></g>
+        <!-- Area bubbles -->
+        <g id="areas-layer"></g>
+        <!-- Roads -->
+        <g id="roads-layer"></g>
+        <!-- Route line -->
+        <g id="route-layer"></g>
+        <!-- POI dots -->
+        <g id="poi-layer"></g>
+        <!-- Labels -->
+        <g id="labels-layer"></g>
+      </svg>
+
+      <!-- Map legend -->
+      <div class="map-legend">
+        <div class="legend-title">ЛЕГЕНДА</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff5a5a"></span> Пляжи</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#44dd66"></span> Смотровые</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ffaa33"></span> Храмы</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#33cc88"></span> Природа</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#55bbff"></span> Знаковые места</div>
+      </div>
+
+      <!-- Zoom controls -->
+      <div class="map-zoom">
+        <button class="map-zoom-btn" onclick="svgMapZoom(1)">+</button>
+        <button class="map-zoom-btn" onclick="svgMapZoom(-1)">&minus;</button>
+      </div>
+
+      <!-- Scale bar -->
+      <div class="map-scale">
+        <div class="map-scale-bar"></div>
+        <span class="map-scale-label">10 km</span>
+      </div>
+    </div>
 
     <!-- RIGHT PANEL: Route builder (planning) -->
     <aside class="panel-right">
@@ -596,8 +640,7 @@
   <div id="toasts"></div>
 
   <!-- ===== SCRIPTS ===== -->
-  <!-- Leaflet (must load sync — app scripts reference L.) -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- App scripts -->
   <!-- App JS (defer preserves order; must load before Alpine) -->
   <script defer src="js/data.js"></script>
   <script defer src="js/stats.js"></script>

@@ -165,19 +165,6 @@ img { display: block; max-width: 100%; }
   font-weight: 500;
   color: rgba(255,255,255,0.85);
   background: var(--teal-gradient);
-  overflow: hidden;
-}
-
-.hero-map {
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 140%;
-  width: auto;
-  opacity: 0.18;
-  pointer-events: none;
-  user-select: none;
 }
 
 .hero-title { display: flex; align-items: center; gap: 6px; }
