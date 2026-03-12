@@ -104,9 +104,25 @@ var CAT_COLORS = {
   office: '#BBFF46'
 };
 
+var CAT_EMOJI = {
+  beach:  '🏖',
+  view:   '⛰',
+  temple: '🛕',
+  nature: '🌿',
+  market: '🛍',
+  food:   '🍜',
+  photo:  '📸',
+  office: '🏍'
+};
+
 function getCatColor(place) {
   var cat = getDisplayCat(place);
   return CAT_COLORS[cat] || '#ffffff';
+}
+
+function getCatEmoji(place) {
+  var cat = getDisplayCat(place);
+  return CAT_EMOJI[cat] || '📍';
 }
 
 /* ===== SVG element helpers ===== */
