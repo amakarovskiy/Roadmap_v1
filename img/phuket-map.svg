@@ -1,0 +1,277 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800" fill="none">
+  <defs>
+    <!-- Glow filter for accent elements -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Gradient for island fill -->
+    <linearGradient id="islandFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1b2e" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0b3052" stop-opacity="0.6"/>
+    </linearGradient>
+    <!-- Water gradient -->
+    <radialGradient id="waterGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#095e70" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Road dash pattern -->
+    <pattern id="roadDash" patternUnits="userSpaceOnUse" width="8" height="1">
+      <rect width="5" height="1" fill="rgba(255,255,255,0.12)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background water glow -->
+  <ellipse cx="200" cy="400" rx="250" ry="450" fill="url(#waterGlow)"/>
+
+  <!-- === PHUKET ISLAND COASTLINE === -->
+  <!-- Realistic outline based on actual GPS coordinates, mapped to SVG viewBox -->
+  <!-- Lat range: ~7.76 (south) to ~8.17 (north) = ~0.41 degrees -->
+  <!-- Lng range: ~98.27 (west) to ~98.41 (east) = ~0.14 degrees -->
+  <path id="island" d="
+    M 175,45
+    C 180,40 195,35 210,32
+    C 230,28 250,30 265,38
+    C 278,45 285,55 290,68
+    L 295,82
+    C 300,95 305,108 308,122
+    C 312,140 315,155 316,170
+    C 318,188 315,200 312,215
+    C 310,225 305,238 300,248
+    L 295,260
+    C 290,272 285,282 282,295
+    C 278,310 275,325 272,340
+    C 268,358 265,370 260,385
+    C 255,400 250,415 248,430
+    C 245,448 242,460 240,475
+    C 238,488 235,500 232,515
+    C 228,530 225,542 222,555
+    C 218,572 215,585 210,600
+    C 205,618 198,632 192,648
+    C 188,660 182,675 178,688
+    C 172,705 168,715 162,728
+    C 158,738 155,745 150,752
+    C 145,758 138,762 130,765
+    C 120,768 112,766 105,762
+    C 98,756 92,748 88,738
+    C 82,725 80,715 78,700
+    C 75,685 73,672 72,658
+    C 70,640 72,625 75,610
+    C 78,595 82,580 88,565
+    C 92,548 95,535 100,520
+    C 105,505 108,490 112,475
+    C 115,458 118,442 120,428
+    C 122,412 125,398 128,382
+    C 130,365 132,350 135,335
+    C 136,318 138,305 140,290
+    C 141,275 142,260 143,245
+    C 145,228 148,215 150,200
+    C 152,185 155,172 158,158
+    C 160,142 162,128 165,115
+    C 167,100 168,88 170,75
+    C 172,62 174,52 175,45
+    Z
+  " fill="url(#islandFill)" stroke="#BBFF46" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- Inner coastline detail -->
+  <path d="
+    M 175,45
+    C 180,40 195,35 210,32
+    C 230,28 250,30 265,38
+    C 278,45 285,55 290,68
+  " fill="none" stroke="#BBFF46" stroke-width="0.5" stroke-opacity="0.25" stroke-dasharray="2,4"/>
+
+  <!-- === MAIN ROADS === -->
+  <!-- Route 402 - Main north-south highway -->
+  <path d="M 190,60 L 195,120 L 200,180 L 205,240 L 200,300 L 195,360 L 190,420 L 185,480 L 180,540 L 175,600 L 165,660 L 155,720 L 140,755"
+    fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Route 4029 - West coast road -->
+  <path d="M 165,115 L 145,180 L 130,240 L 120,300 L 115,360 L 118,420 L 125,480 L 130,540 L 135,580 L 140,620"
+    fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+
+  <!-- Route 4021 - East coast road -->
+  <path d="M 260,120 L 255,180 L 248,240 L 240,300 L 235,360 L 228,420 L 220,480 L 210,540 L 195,600 L 180,660"
+    fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+
+  <!-- Cross roads -->
+  <path d="M 130,240 L 200,235 L 255,240" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,4"/>
+  <path d="M 120,420 L 190,415 L 235,420" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,4"/>
+  <path d="M 135,580 L 180,575 L 210,580" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,4"/>
+
+  <!-- === DISTRICT LABELS === -->
+  <style>
+    .district { font-family: 'Inter Tight', sans-serif; fill: rgba(255,255,255,0.35); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .district-main { font-family: 'Inter Tight', sans-serif; fill: rgba(255,255,255,0.5); font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+    .poi-label { font-family: 'Inter Tight', sans-serif; fill: rgba(255,255,255,0.55); font-size: 8px; font-weight: 500; }
+  </style>
+
+  <!-- Mai Khao (north) -->
+  <text class="district" x="195" y="85" text-anchor="middle">Mai Khao</text>
+
+  <!-- Sirinat National Park area -->
+  <text class="district" x="210" y="135" text-anchor="middle">Nai Yang</text>
+
+  <!-- Bang Tao -->
+  <text class="district" x="155" y="215" text-anchor="middle">Bang Tao</text>
+
+  <!-- Surin -->
+  <text class="district" x="140" y="275" text-anchor="middle">Surin</text>
+
+  <!-- Kamala -->
+  <text class="district" x="130" y="340" text-anchor="middle">Kamala</text>
+
+  <!-- Patong - main tourist area -->
+  <text class="district-main" x="125" y="420" text-anchor="middle">Patong</text>
+
+  <!-- Phuket Town -->
+  <text class="district-main" x="248" y="415" text-anchor="middle">Phuket Town</text>
+
+  <!-- Karon -->
+  <text class="district" x="130" y="500" text-anchor="middle">Karon</text>
+
+  <!-- Kata -->
+  <text class="district" x="135" y="555" text-anchor="middle">Kata</text>
+
+  <!-- Chalong -->
+  <text class="district-main" x="210" y="600" text-anchor="middle">Chalong</text>
+
+  <!-- Rawai -->
+  <text class="district" x="170" y="680" text-anchor="middle">Rawai</text>
+
+  <!-- Cape Promthep -->
+  <text class="district" x="148" y="745" text-anchor="middle">Promthep</text>
+
+  <!-- === POI DOTS (color-coded by category) === -->
+
+  <!-- BEACHES (blue) -->
+  <!-- Patong Beach -->
+  <circle cx="112" cy="410" r="4" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="112" cy="410" r="1.5" fill="#4a9eff"/>
+
+  <!-- Karon Beach -->
+  <circle cx="118" cy="488" r="4" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="118" cy="488" r="1.5" fill="#4a9eff"/>
+
+  <!-- Kata Beach -->
+  <circle cx="122" cy="545" r="4" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="122" cy="545" r="1.5" fill="#4a9eff"/>
+
+  <!-- Freedom Beach -->
+  <circle cx="108" cy="445" r="3.5" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="108" cy="445" r="1.5" fill="#4a9eff"/>
+
+  <!-- Surin Beach -->
+  <circle cx="128" cy="265" r="3.5" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="128" cy="265" r="1.5" fill="#4a9eff"/>
+
+  <!-- Bang Tao Beach -->
+  <circle cx="140" cy="200" r="3.5" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="140" cy="200" r="1.5" fill="#4a9eff"/>
+
+  <!-- Mai Khao Beach -->
+  <circle cx="185" cy="70" r="3.5" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="185" cy="70" r="1.5" fill="#4a9eff"/>
+
+  <!-- Nai Harn Beach -->
+  <circle cx="148" cy="705" r="3.5" fill="rgba(26,74,138,0.9)" filter="url(#glow)"/>
+  <circle cx="148" cy="705" r="1.5" fill="#4a9eff"/>
+
+  <!-- Banana Beach -->
+  <circle cx="120" cy="308" r="3" fill="rgba(26,74,138,0.8)" filter="url(#glow)"/>
+  <circle cx="120" cy="308" r="1.2" fill="#4a9eff"/>
+
+  <!-- VIEWPOINTS (green) -->
+  <!-- Karon Viewpoint -->
+  <circle cx="140" cy="570" r="4" fill="rgba(45,74,30,0.9)" filter="url(#glow)"/>
+  <circle cx="140" cy="570" r="1.5" fill="#BBFF46"/>
+
+  <!-- Promthep Cape -->
+  <circle cx="145" cy="738" r="4.5" fill="rgba(45,74,30,0.9)" filter="url(#glow)"/>
+  <circle cx="145" cy="738" r="2" fill="#BBFF46"/>
+
+  <!-- Windmill Viewpoint -->
+  <circle cx="128" cy="660" r="3.5" fill="rgba(45,74,30,0.9)" filter="url(#glow)"/>
+  <circle cx="128" cy="660" r="1.5" fill="#BBFF46"/>
+
+  <!-- Rang Hill -->
+  <circle cx="238" cy="395" r="3.5" fill="rgba(45,74,30,0.9)" filter="url(#glow)"/>
+  <circle cx="238" cy="395" r="1.5" fill="#BBFF46"/>
+
+  <!-- Big Buddha -->
+  <circle cx="185" cy="575" r="5" fill="rgba(45,74,30,0.9)" filter="url(#glow)"/>
+  <circle cx="185" cy="575" r="2" fill="#BBFF46"/>
+  <text class="poi-label" x="195" y="578" fill="#BBFF46" fill-opacity="0.7">Big Buddha</text>
+
+  <!-- TEMPLES (brown/orange) -->
+  <!-- Chalong Temple -->
+  <circle cx="215" cy="590" r="4" fill="rgba(74,45,30,0.9)" filter="url(#glow)"/>
+  <circle cx="215" cy="590" r="1.5" fill="#ff9a4a"/>
+
+  <!-- Old Town temples -->
+  <circle cx="255" cy="430" r="3.5" fill="rgba(74,45,30,0.9)" filter="url(#glow)"/>
+  <circle cx="255" cy="430" r="1.5" fill="#ff9a4a"/>
+
+  <!-- MARKETS (olive) -->
+  <!-- Weekend Market -->
+  <circle cx="242" cy="450" r="3.5" fill="rgba(74,58,30,0.9)" filter="url(#glow)"/>
+  <circle cx="242" cy="450" r="1.5" fill="#ffd34a"/>
+
+  <!-- Malin Plaza (Patong) -->
+  <circle cx="130" cy="430" r="3" fill="rgba(74,58,30,0.8)" filter="url(#glow)"/>
+  <circle cx="130" cy="430" r="1.2" fill="#ffd34a"/>
+
+  <!-- FOOD (red) -->
+  <!-- Rawai Seafood -->
+  <circle cx="178" cy="670" r="3.5" fill="rgba(74,30,30,0.9)" filter="url(#glow)"/>
+  <circle cx="178" cy="670" r="1.5" fill="#ff4a4a"/>
+
+  <!-- PHOTO spots (teal) -->
+  <!-- Old Town street art -->
+  <circle cx="260" cy="410" r="3.5" fill="rgba(30,58,74,0.9)" filter="url(#glow)"/>
+  <circle cx="260" cy="410" r="1.5" fill="#4affea"/>
+
+  <!-- === OFFICE MARKER (ThaiGo) === -->
+  <g filter="url(#softGlow)">
+    <circle cx="125" cy="490" r="8" fill="#BBFF46" fill-opacity="0.15" stroke="#BBFF46" stroke-width="1" stroke-opacity="0.4"/>
+    <circle cx="125" cy="490" r="4" fill="#BBFF46" fill-opacity="0.3"/>
+    <circle cx="125" cy="490" r="2" fill="#BBFF46"/>
+  </g>
+  <text class="poi-label" x="137" y="493" fill="#BBFF46" fill-opacity="0.8" font-weight="700" font-size="9">ThaiGo</text>
+
+  <!-- === DECORATIVE ELEMENTS === -->
+
+  <!-- Compass rose (top-right) -->
+  <g transform="translate(340, 60)" opacity="0.3">
+    <line x1="0" y1="-20" x2="0" y2="20" stroke="#BBFF46" stroke-width="1"/>
+    <line x1="-20" y1="0" x2="20" y2="0" stroke="#BBFF46" stroke-width="1"/>
+    <polygon points="0,-22 -4,-8 4,-8" fill="#BBFF46"/>
+    <text x="0" y="-26" text-anchor="middle" font-family="Inter Tight, sans-serif" font-size="9" fill="#BBFF46" font-weight="700">N</text>
+  </g>
+
+  <!-- Scale bar (bottom-right) -->
+  <g transform="translate(280, 770)" opacity="0.25">
+    <line x1="0" y1="0" x2="80" y2="0" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="-3" x2="0" y2="3" stroke="white" stroke-width="1"/>
+    <line x1="80" y1="-3" x2="80" y2="3" stroke="white" stroke-width="1"/>
+    <text x="40" y="12" text-anchor="middle" font-family="Inter Tight, sans-serif" font-size="8" fill="white">~10 km</text>
+  </g>
+
+  <!-- Coordinate labels -->
+  <text x="10" y="795" font-family="Inter Tight, sans-serif" font-size="7" fill="rgba(255,255,255,0.15)">7.76°N</text>
+  <text x="10" y="50" font-family="Inter Tight, sans-serif" font-size="7" fill="rgba(255,255,255,0.15)">8.17°N</text>
+  <text x="340" y="795" font-family="Inter Tight, sans-serif" font-size="7" fill="rgba(255,255,255,0.15)">98.40°E</text>
+
+  <!-- Title -->
+  <text x="200" y="22" text-anchor="middle" font-family="Inter Tight, sans-serif" font-size="14" fill="#BBFF46" fill-opacity="0.4" font-weight="800" letter-spacing="4">PHUKET</text>
+</svg>
