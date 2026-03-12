@@ -1,0 +1,225 @@
+/* =============================================
+   PHUKET SVG MAP KIT — Styles
+   Copy this file into your project
+   ============================================= */
+
+/* --- Map Container --- */
+#map {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(9,60,70,0.3) 0%, #0A0A0A 70%);
+}
+
+#map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+#map-svg:active {
+  cursor: grabbing;
+}
+
+/* --- POI Markers --- */
+.poi-marker {
+  transition: opacity .15s;
+}
+
+.poi-marker:hover .poi-dot {
+  opacity: 1 !important;
+  stroke-width: 2.5 !important;
+}
+
+.poi-marker:hover .poi-glow {
+  opacity: 0.4 !important;
+}
+
+/* --- Office Pulse Animation --- */
+.office-pulse-svg {
+  animation: svgPulse 2s ease-out infinite;
+}
+
+@keyframes svgPulse {
+  0%   { r: 14; opacity: 0.5; }
+  100% { r: 24; opacity: 0; }
+}
+
+/* --- Route Line Animation --- */
+.route-line {
+  animation: dashMove 20s linear infinite;
+}
+
+@keyframes dashMove {
+  to { stroke-dashoffset: -200; }
+}
+
+/* --- Popup --- */
+.svg-popup {
+  position: absolute;
+  z-index: 1000;
+  transform: translate(-50%, -100%);
+  max-width: 320px;
+  min-width: 260px;
+  background: #111820;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  pointer-events: auto;
+}
+
+.svg-popup-arrow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.svg-popup-arrow::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: #111820;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.svg-popup-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.svg-popup-close:hover {
+  color: #fff;
+}
+
+/* --- Legend --- */
+.map-legend {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10,10,10,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  z-index: 100;
+}
+
+.legend-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* --- Zoom Controls --- */
+.map-zoom {
+  position: absolute;
+  bottom: 50px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+}
+
+.map-zoom-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(12,20,32,0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-zoom-btn:first-child { border-radius: 10px 10px 0 0; }
+.map-zoom-btn:last-child  { border-radius: 0 0 10px 10px; }
+.map-zoom-btn:hover { background: rgba(12,20,32,1); color: #BBFF46; }
+
+/* --- Scale Bar --- */
+.map-scale {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+}
+
+.map-scale-bar {
+  width: 80px;
+  height: 2px;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+}
+
+.map-scale-bar::before,
+.map-scale-bar::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  top: -3px;
+}
+
+.map-scale-bar::before { left: 0; }
+.map-scale-bar::after  { right: 0; }
+
+.map-scale-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+}
+
+/* --- Mobile --- */
+@media (max-width: 900px) {
+  .map-legend {
+    right: 8px;
+    top: auto;
+    bottom: 56px;
+    transform: none;
+    padding: 10px 12px;
+  }
+  .map-zoom { bottom: 40px; right: 8px; }
+}
