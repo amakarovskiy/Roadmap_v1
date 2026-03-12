@@ -1,0 +1,375 @@
+/* ===== Map dot markers ===== */
+.map-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+  position: relative;
+}
+
+.map-dot:hover {
+  transform: scale(1.25);
+  border-color: var(--green);
+}
+
+.map-dot.in-route {
+  border-color: var(--green);
+  background: rgba(187,255,70,0.2) !important;
+  box-shadow: 0 0 12px rgba(187,255,70,0.3);
+}
+
+/* Category colors */
+.map-dot.cat-beach  { background: rgba(26,74,138,0.7); }
+.map-dot.cat-view   { background: rgba(45,74,30,0.7); }
+.map-dot.cat-temple { background: rgba(74,45,30,0.7); }
+.map-dot.cat-nature { background: rgba(30,74,45,0.7); }
+.map-dot.cat-market { background: rgba(74,58,30,0.7); }
+.map-dot.cat-food   { background: rgba(74,30,30,0.7); }
+.map-dot.cat-photo  { background: rgba(30,58,74,0.7); }
+.map-dot.cat-top    { background: rgba(90,74,10,0.7); }
+
+/* Route number badge */
+.map-dot .route-number {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Route start/finish label */
+.route-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  padding: 1px 5px;
+  border-radius: 4px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.route-label-start {
+  background: var(--green);
+  color: #000;
+}
+
+.route-label-end {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 10px;
+  padding: 0 4px;
+}
+
+/* ===== Office marker ===== */
+.office-marker {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(10,10,10,0.9);
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 0 0 3px rgba(187,255,70,0.15);
+}
+
+.office-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
+}
+
+.office-marker.in-route {
+  background: rgba(187,255,70,0.3);
+  box-shadow: 0 0 16px rgba(187,255,70,0.4);
+}
+
+.office-marker .route-number {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.office-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  opacity: 0;
+  animation: pulse 2s ease-out infinite;
+}
+
+/* ===== Leaflet popup override ===== */
+.leaflet-popup-content-wrapper {
+  background: #111820 !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.leaflet-popup-tip {
+  background: #111820 !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: none !important;
+}
+
+.leaflet-popup-close-button {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 20px !important;
+  top: 6px !important;
+  right: 8px !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #fff !important;
+}
+
+/* ===== Place popup card ===== */
+.place-popup {
+  padding: 16px 18px;
+  min-width: 240px;
+  max-width: 300px;
+}
+
+/* Block 0: Image */
+.popup-img {
+  margin: -16px -18px 12px;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  max-height: 140px;
+}
+
+.popup-img img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Block 1: Header */
+.popup-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.popup-icon {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.popup-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.popup-name-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.popup-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.popup-top-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: rgba(255,215,0,0.14);
+  color: #FFD700;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Block 2: Category */
+.popup-cat {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Block 3: Description */
+.popup-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* Tip line */
+.popup-tip {
+  font-size: 12px;
+  color: rgba(255,200,50,0.75);
+  line-height: 1.45;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(255,215,0,0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255,215,0,0.08);
+}
+
+/* Block 4: Metadata */
+.popup-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.popup-meta-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.popup-meta-item small {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: 1px;
+}
+
+/* Block 5: Action button */
+.popup-add-btn {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--green);
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.popup-add-btn:hover {
+  background: var(--gdk);
+}
+
+.popup-add-btn.in-route {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+}
+
+.popup-add-btn.in-route:hover {
+  background: rgba(255,77,77,0.15);
+  color: #FF4D4D;
+}
+
+/* ===== Leaflet zoom control override ===== */
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: rgba(12,20,32,0.9) !important;
+  color: rgba(255,255,255,0.7) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  font-size: 16px !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(12,20,32,1) !important;
+  color: var(--green) !important;
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+/* ===== Attribution (clean, no Leaflet branding) ===== */
+.leaflet-control-attribution {
+  background: rgba(10, 10, 10, 0.78) !important;
+  color: rgba(255,255,255,0.72) !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 10px !important;
+  padding: 6px 10px !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22) !important;
+  margin: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: rgba(255,255,255,0.82) !important;
+  text-decoration: none !important;
+}
+
+.leaflet-control-attribution a:hover {
+  color: var(--green) !important;
+}
+
+/* ===== Route polyline (handled by Leaflet SVG, but add dash animation) ===== */
+.leaflet-overlay-pane svg path.leaflet-interactive {
+  stroke-dashoffset: 0;
+}

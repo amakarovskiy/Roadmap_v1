@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Маршруты по Пхукету на байке — интерактивный планировщик | ThaiGo Rent</title>
+  <meta name="description" content="Интерактивный планировщик маршрутов по Пхукету. 60+ мест: пляжи, храмы, смотровые, рынки, рестораны, фотоспоты. Расчёт километров, времени и бензина. Аренда байка от 100 ฿/сутки.">
+  <link rel="canonical" href="https://map.thaigo.rent/">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="https://thaigo.rent/wp-content/themes/wordpress-theme/img/logo.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://thaigo.rent/wp-content/uploads/2024/12/cropped-android-chrome-192x192-1-32x32.png">
+  <link rel="apple-touch-icon" href="https://thaigo.rent/wp-content/uploads/2024/12/cropped-android-chrome-192x192-1-180x180.png">
+
+  <!-- Verification -->
+  <meta name="yandex-verification" content="">
+  <meta name="google-site-verification" content="">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Планировщик маршрутов по Пхукету на байке | ThaiGo Rent">
+  <meta property="og:description" content="Построй маршрут по Пхукету: 60+ мест, расчёт км, времени и бензина. Аренда байка от 100 ฿/сутки.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://map.thaigo.rent/">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://map.thaigo.rent/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Планировщик маршрутов по Пхукету — интерактивная карта с 60+ местами">
+  <meta property="og:site_name" content="ThaiGo Rent">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Планировщик маршрутов по Пхукету на байке | ThaiGo Rent">
+  <meta name="twitter:description" content="60+ мест на Пхукете: пляжи, храмы, рынки, фотоспоты. Расчёт км, времени и бензина.">
+  <meta name="twitter:image" content="https://map.thaigo.rent/og-cover.jpg">
+
+  <!-- Google Fonts: Inter Tight -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/panel.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Schema.org: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Планировщик маршрутов по Пхукету",
+    "url": "https://map.thaigo.rent/",
+    "applicationCategory": "TravelApplication",
+    "inLanguage": "ru",
+    "description": "Интерактивный планировщик маршрутов по острову Пхукет для туристов на байке. 60+ мест с расчётом расстояния, времени и бензина.",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    },
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "ThaiGo Rent",
+      "url": "https://thaigo.rent",
+      "telephone": "+66822545737",
+      "image": "https://thaigo.rent/wp-content/themes/wordpress-theme/img/logo.svg",
+      "priceRange": "100-500 THB",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Patak Rd",
+        "addressLocality": "Karon",
+        "addressRegion": "Phuket",
+        "addressCountry": "TH"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 7.8439,
+        "longitude": 98.2977
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      }
+    }
+  }
+  </script>
+
+  <!-- Schema.org: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ThaiGo Rent",
+        "item": "https://thaigo.rent/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Планировщик маршрутов по Пхукету",
+        "item": "https://map.thaigo.rent/"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Сколько стоит аренда байка на Пхукете?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Аренда скутера на Пхукете в ThaiGo Rent стоит от 100 бат в сутки (около 270 рублей). Цена зависит от модели: Honda Click от 100 ฿, Yamaha NMAX от 250 ฿, Honda PCX от 300 ฿. Страховка и доставка в отель включены."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Какие документы нужны для аренды байка?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Для аренды байка на Пхукете нужен загранпаспорт и международные водительские права (категория А). Залог — от 2000 бат или копия паспорта. ThaiGo Rent принимает бронирование через WhatsApp и Telegram."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Сколько стоит бензин на Пхукете?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Бензин на Пхукете стоит около 43 бат за литр (около 115 рублей). Средний расход скутера — 4 литра на 100 км. Маршрут длиной 50 км обойдётся примерно в 85 бат бензина."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Какой маршрут по Пхукету выбрать новичку?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Лучший маршрут для начинающих: Патонг — Карон — Ката — смотровая Карон — мыс Пхромтхеп. Это 25 км по прибрежной дороге, около 40 минут в пути, без сложных серпантинов. Дорога асфальтированная с красивыми видами."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Безопасно ли ездить на байке по Пхукету?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Движение на Пхукете левостороннее. Основные правила: носите шлем (штраф 500 ฿), не превышайте 60 км/ч в городе и 90 км/ч на трассе, сбрасывайте скорость на серпантинах. Избегайте поездок в Патонг в час пик (8-10 утра и 17-19 вечера)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Как пользоваться планировщиком маршрутов?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Выберите интересные места из списка слева или на карте. Планировщик автоматически рассчитает расстояние, время в пути и стоимость бензина. Можно оптимизировать порядок точек, поделиться маршрутом через WhatsApp/Telegram или открыть в Google Maps."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <a href="https://thaigo.rent" target="_blank" rel="noopener">
+      <img
+        src="https://thaigo.rent/wp-content/themes/wordpress-theme/img/logo.svg"
+        alt="ThaiGo Rent"
+        height="44"
+        class="logo-img"
+      >
+    </a>
+
+    <nav class="header-nav">
+      <a href="https://thaigo.rent/#book-form">Забронировать</a>
+      <a href="https://thaigo.rent/#catalog">Каталог</a>
+      <a href="https://thaigo.rent/#where-go">Маршруты</a>
+      <a href="https://thaigo.rent/#comments">Отзывы</a>
+      <a href="https://thaigo.rent/#faq">FAQ</a>
+      <a href="https://thaigo.rent/#contact-info">Контакты</a>
+    </nav>
+
+    <a href="https://thaigo.rent" class="header-back">← На главную</a>
+
+    <button class="burger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Меню">☰</button>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu">
+    <a href="https://thaigo.rent/#book-form" onclick="this.parentElement.classList.remove('open')">🏍 Забронировать</a>
+    <a href="https://thaigo.rent/#catalog" onclick="this.parentElement.classList.remove('open')">📋 Каталог</a>
+    <a href="https://thaigo.rent/#where-go" onclick="this.parentElement.classList.remove('open')">🗺️ Маршруты</a>
+    <a href="https://thaigo.rent/#comments" onclick="this.parentElement.classList.remove('open')">⭐ Отзывы</a>
+    <a href="https://thaigo.rent/#faq" onclick="this.parentElement.classList.remove('open')">❓ FAQ</a>
+    <a href="https://thaigo.rent/#contact-info" onclick="this.parentElement.classList.remove('open')">📞 Контакты</a>
+    <a href="https://thaigo.rent" onclick="this.parentElement.classList.remove('open')">← На главную</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <span class="hero-title">🗺️ Планировщик маршрутов <span class="hero-accent">ПХУКЕТА</span></span>
+    <span class="hero-sep">|</span>
+    <span>Выбери места → получи маршрут с расчётом времени и бензина</span>
+    <span class="hero-sep">|</span>
+    <span class="hero-badge">🏍 Аренда байка от 100 ฿/сутки</span>
+  </div>
+
+  <!-- ===== MAIN SHELL (3-column: catalog | map | route) ===== -->
+  <main class="shell" x-data="panelData()" x-init="init()">
+
+    <!-- LEFT PANEL: Places catalog (discovery) -->
+    <aside class="panel-left">
+      <!-- Filters -->
+      <div class="filters-wrap">
+        <div class="filters">
+          <button class="filter-pill" :class="{ active: filter === 'top' }" @click="setFilter('top')">⭐ Топ</button>
+          <button class="filter-pill" :class="{ active: filter === 'all' }" @click="setFilter('all')">🌍 Все</button>
+          <button class="filter-pill" :class="{ active: filter === 'beach' }" @click="setFilter('beach')">🏖 Пляжи</button>
+          <button class="filter-pill" :class="{ active: filter === 'view' }" @click="setFilter('view')">⛰ Смотровые</button>
+          <button class="filter-pill" :class="{ active: filter === 'temple' }" @click="setFilter('temple')">🛕 Храмы</button>
+          <button class="filter-pill" :class="{ active: filter === 'nature' }" @click="setFilter('nature')">🌿 Природа</button>
+          <button class="filter-pill" :class="{ active: filter === 'market' }" @click="setFilter('market')">🛍 Рынки</button>
+          <button class="filter-pill" :class="{ active: filter === 'food' }" @click="setFilter('food')">🍜 Еда</button>
+          <button class="filter-pill" :class="{ active: filter === 'photo' }" @click="setFilter('photo')">📸 Фото</button>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-row">
+        <input type="text" placeholder="🔍 Поиск места..." x-model="search" class="search-input">
+      </div>
+
+      <!-- Place list -->
+      <div class="list-scroll">
+        <template x-for="place in filteredPlaces" :key="place.id">
+          <div class="place-card"
+               :class="{ active: place._inRoute }"
+               @click="togglePlace(place)">
+            <div class="place-icon-wrap" :class="'cat-' + getDisplayCat(place)">
+              <span x-text="place.icon"></span>
+            </div>
+            <div class="place-info">
+              <div class="place-name" x-text="place.name"></div>
+              <div class="place-desc" x-text="place.desc"></div>
+            </div>
+            <button class="place-add"
+                    :class="{ added: place._inRoute }"
+                    @click.stop="togglePlace(place)">
+              <span x-text="place._inRoute ? '✓' : '+'"></span>
+            </button>
+          </div>
+        </template>
+      </div>
+
+      <!-- Presets & Generator (bottom of left panel) -->
+      <div class="gen-block">
+        <div class="gen-row">
+          <div class="presets-wrap" style="flex:1">
+            <button class="gen-btn" @click.stop="togglePresets()">📋 Готовые маршруты</button>
+            <div class="presets-popover" x-show="presetsOpen" x-transition @click.stop>
+              <template x-for="preset in PRESET_ROUTES" :key="preset.name">
+                <button class="share-popover-item" @click="loadPreset(preset)">
+                  <span class="share-popover-icon" style="background:rgba(255,255,255,0.06)" x-text="preset.icon"></span>
+                  <span class="share-popover-label" x-text="preset.name"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div class="gen-row">
+          <button class="gen-btn gen-btn-rand" @click="generateRandom(120)">🎲 2 ч</button>
+          <button class="gen-btn gen-btn-rand" @click="generateRandom(240)">🎲 4 ч</button>
+          <button class="gen-btn gen-btn-rand" @click="generateRandom(480)">🎲 Весь день</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAP -->
+    <div id="map"></div>
+
+    <!-- RIGHT PANEL: Route builder (planning) -->
+    <aside class="panel-right">
+
+      <!-- Route header -->
+      <div class="route-header">
+        <span>Маршрут <span class="route-count" x-text="route.length"></span>/<span x-text="12"></span></span>
+        <div style="display:flex;gap:5px;align-items:center">
+          <div class="share-popover-wrap" x-show="route.length >= 2">
+            <button class="share-btn" @click.stop="toggleSharePopover()" title="Поделиться">📤</button>
+            <div class="share-popover" x-show="shareOpen" x-transition @click.stop>
+              <button class="share-popover-item" @click="shareToCompanionWA()">
+                <span class="share-popover-icon icon-companion">👤</span>
+                <span class="share-popover-text">
+                  <span class="share-popover-label">Отправить спутнику</span>
+                  <span class="share-popover-sub">WhatsApp</span>
+                </span>
+              </button>
+              <button class="share-popover-item" @click="shareToCompanionTG()">
+                <span class="share-popover-icon icon-tg">✈️</span>
+                <span class="share-popover-text">
+                  <span class="share-popover-label">Отправить спутнику</span>
+                  <span class="share-popover-sub">Telegram</span>
+                </span>
+              </button>
+              <div class="share-popover-sep"></div>
+              <button class="share-popover-item" @click="copyLink()">
+                <span class="share-popover-icon icon-copy">🔗</span>
+                <span class="share-popover-text">
+                  <span class="share-popover-label">Скопировать ссылку</span>
+                  <span class="share-popover-sub">Вставь в любой чат</span>
+                </span>
+              </button>
+              <button class="share-popover-item" @click="saveTomorrow()">
+                <span class="share-popover-icon icon-save">📌</span>
+                <span class="share-popover-text">
+                  <span class="share-popover-label">Сохранить на завтра</span>
+                  <span class="share-popover-sub">Ссылка откроет маршрут</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <button class="clear-btn" x-show="route.length > 0" @click="clearRoute()" title="Сбросить маршрут">✕</button>
+        </div>
+      </div>
+
+      <!-- Optimize route button -->
+      <button class="optimize-btn-full" x-show="route.length >= 3" @click="optimizeRoute()">
+        ⚡ Оптимизировать маршрут
+      </button>
+
+      <!-- Route name & rating -->
+      <div class="route-name-row" x-show="route.length >= 2">
+        <span class="route-name-label" x-text="routeName"></span>
+        <span class="route-rating" x-show="routeRating" x-text="routeRating ? routeRating.icon + ' ' + routeRating.text : ''"></span>
+      </div>
+
+      <!-- Route stops (draggable) -->
+      <div class="route-list">
+        <template x-for="(stop, i) in route" :key="stop.id">
+          <div class="stop" draggable="true">
+            <span class="stop-drag">⠿</span>
+            <div class="stop-num"
+                 :class="{ start: i === 0, end: i === route.length - 1 && route.length > 1 }"
+                 x-text="i + 1"></div>
+            <span class="stop-name" x-text="stop.name" @click.stop="focusPlace(stop.id)"></span>
+            <button class="stop-remove" @click.stop="removeStop(stop.id)">×</button>
+          </div>
+        </template>
+        <div x-show="route.length === 0" class="empty-route">
+          Выбери 2+ места чтобы построить маршрут
+        </div>
+      </div>
+
+      <!-- Start from ThaiGo -->
+      <button class="thaigo-start-btn" x-show="route.length > 0 && !hasThaiGo" @click="startFromThaiGo()">
+        🏍 Начать от ThaiGo Rent
+      </button>
+
+      <!-- Stats -->
+      <div class="stats" x-show="route.length >= 2">
+        <div class="stat" :class="{ active: stats.km > 0 }">
+          <div class="stat-value" x-text="stats.km.toFixed ? stats.km.toFixed(1) : stats.km">0.0</div>
+          <div class="stat-unit">км</div>
+          <div class="stat-sub" x-show="stats.rubKm > 0" x-text="'≈ ' + stats.rubKm + ' ₽'"></div>
+        </div>
+        <div class="stat" :class="{ active: stats.mins > 0 }">
+          <div class="stat-value" x-text="formatTime(stats.mins)">0</div>
+          <div class="stat-unit">в пути</div>
+        </div>
+        <div class="stat" :class="{ active: stats.fuel > 0 }">
+          <div class="stat-value" x-text="stats.fuel">0</div>
+          <div class="stat-unit">฿ бензин</div>
+          <div class="stat-sub" x-show="stats.rubFuel > 0" x-text="'≈ ' + stats.rubFuel + ' ₽'"></div>
+        </div>
+      </div>
+
+      <!-- Cost comparison (taxi vs bike) -->
+      <div class="cost-compare" x-show="route.length >= 2 && taxiCost > 0">
+        <span class="cost-compare-taxi">🚕 Такси: ~<span x-text="taxiCost"></span> ฿</span>
+        <span class="cost-compare-sep">→</span>
+        <span class="cost-compare-bike">🏍 Байк: ~100 ฿/день</span>
+      </div>
+
+      <!-- Nearby suggestion -->
+      <div class="nearby-hint" x-show="nearbySuggestion" x-transition>
+        <span class="nearby-hint-text">
+          <span x-text="nearbySuggestion ? nearbySuggestion.icon : ''"></span>
+          Рядом: <strong x-text="nearbySuggestion ? nearbySuggestion.name : ''"></strong>
+        </span>
+        <button class="nearby-hint-btn" @click="addSuggestion()">+ Добавить</button>
+      </div>
+
+      <!-- Warnings -->
+      <div class="warn-block" x-show="warnings.length > 0">
+        <template x-for="w in warnings" :key="w">
+          <div class="warn-item">
+            <span class="warn-icon" x-text="getWarning(w).icon"></span>
+            <span x-text="getWarning(w).text"></span>
+          </div>
+        </template>
+      </div>
+
+      <!-- Spacer to push CTA to bottom -->
+      <div class="panel-right-spacer"></div>
+
+      <!-- Bike rental CTA (3+ points) -->
+      <div class="rent-cta" x-show="route.length >= 3">
+        <div class="rent-cta-text">
+          <div class="rent-cta-title">Для маршрута нужен байк</div>
+          <div class="rent-cta-sub">от 100 ฿ в день</div>
+        </div>
+        <button class="rent-cta-btn" @click="rentBikeWA()">Арендовать</button>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <div class="ctas">
+          <a class="cta cta-wa"
+             :href="waLink"
+             target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+            WhatsApp
+          </a>
+          <a class="cta cta-tg"
+             :href="tgLink"
+             target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>
+            Telegram
+          </a>
+        </div>
+        <a class="cta cta-gmaps"
+           :href="googleMapsLink"
+           :class="{ disabled: route.length < 2 }"
+           x-show="route.length >= 2"
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" fill="currentColor"/></svg>
+          Открыть в Google Maps
+        </a>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ===== FOOTER: visible SEO content + FAQ + info ===== -->
+  <footer class="site-footer" id="footer">
+
+    <!-- H1 — one per page, visible -->
+    <div class="footer-hero">
+      <h1>Маршруты по Пхукету на байке — интерактивный планировщик</h1>
+      <p class="footer-hero-sub">60+ мест на карте: пляжи, храмы, смотровые, рынки, рестораны и фотоспоты. Построй маршрут и рассчитай время, расстояние и бензин.</p>
+    </div>
+
+    <!-- FAQ accordion — matches FAQPage schema -->
+    <div class="footer-section">
+      <h2 class="footer-section-title">Частые вопросы</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-q">Сколько стоит аренда байка на Пхукете?</summary>
+          <div class="faq-a">Аренда скутера в ThaiGo Rent от 100 бат в сутки (~270 рублей). Honda Click от 100 ฿, Yamaha NMAX от 250 ฿, Honda PCX от 300 ฿. Страховка и доставка в отель включены.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Какие документы нужны для аренды?</summary>
+          <div class="faq-a">Загранпаспорт и международные водительские права (категория А). Залог — от 2000 бат или копия паспорта. Бронирование через WhatsApp и Telegram.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Сколько стоит бензин на Пхукете?</summary>
+          <div class="faq-a">Около 43 бат за литр (~115 рублей). Средний расход скутера — 4 литра на 100 км. Маршрут 50 км обойдётся примерно в 85 бат бензина.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Какой маршрут выбрать новичку?</summary>
+          <div class="faq-a">Патонг — Карон — Ката — смотровая Карон — мыс Пхромтхеп. Это 25 км по прибрежной дороге, около 40 минут, без сложных серпантинов.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Безопасно ли ездить на байке по Пхукету?</summary>
+          <div class="faq-a">Движение левостороннее. Шлем обязателен (штраф 500 ฿), не превышайте 60 км/ч в городе. Сбрасывайте скорость на серпантинах. Избегайте Патонга в час пик (8-10 и 17-19).</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Как пользоваться планировщиком?</summary>
+          <div class="faq-a">Выберите места из списка или на карте. Планировщик рассчитает расстояние, время и бензин. Можно оптимизировать порядок, поделиться через WhatsApp/Telegram или открыть в Google Maps.</div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Distances table -->
+    <div class="footer-section">
+      <h2 class="footer-section-title">Расстояния от Патонга</h2>
+      <div class="distances-grid">
+        <div class="distance-item"><span class="distance-to">Карон</span><span class="distance-val">8 км &middot; 12 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Ката</span><span class="distance-val">12 км &middot; 18 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Большой Будда</span><span class="distance-val">15 км &middot; 25 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Старый город</span><span class="distance-val">12 км &middot; 20 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Мыс Пхромтхеп</span><span class="distance-val">22 км &middot; 35 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Водопад Тон Сай</span><span class="distance-val">22 км &middot; 35 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Най Харн</span><span class="distance-val">20 км &middot; 30 мин</span></div>
+        <div class="distance-item"><span class="distance-to">Бангтао</span><span class="distance-val">18 км &middot; 25 мин</span></div>
+      </div>
+    </div>
+
+    <!-- Category guides -->
+    <div class="footer-section">
+      <h2 class="footer-section-title">Что посмотреть на Пхукете</h2>
+      <div class="footer-guides">
+        <div class="footer-guide">
+          <h3>🏖 Пляжи</h3>
+          <p>14 лучших пляжей. Патонг для ночной жизни, Ката для сёрфинга, Карон для спокойного отдыха, Фридом для уединения, Най Харн для местной атмосферы, Май Кхао в национальном парке.</p>
+        </div>
+        <div class="footer-guide">
+          <h3>⛰ Смотровые</h3>
+          <p>Мыс Пхромтхеп — лучший закат. Смотровая Карон — панорама трёх пляжей. Ранг Хилл — вид на город с кафе. Ветряные мельницы на побережье.</p>
+        </div>
+        <div class="footer-guide">
+          <h3>🛕 Храмы</h3>
+          <p>Ват Чалонг — главный храм. Большой Будда — 45-метровая статуя. Shrine of Serene Light — уникальный свет. Дресс-код: закрытые плечи и колени.</p>
+        </div>
+        <div class="footer-guide">
+          <h3>🛍 Рынки и еда</h3>
+          <p>Банзаан — морепродукты. Ночной рынок каждый вечер. Нака — weekend market. Тунг Ка Кафе — тайская кухня с панорамой на Ранг Хилл.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Driving tips -->
+    <div class="footer-section">
+      <h2 class="footer-section-title">Советы по вождению</h2>
+      <div class="tips-grid">
+        <div class="tip-card"><span class="tip-icon">🛣</span><span>Левостороннее движение</span></div>
+        <div class="tip-card"><span class="tip-icon">🪪</span><span>Международные права обязательны</span></div>
+        <div class="tip-card"><span class="tip-icon">⛑</span><span>Шлем обязателен (штраф 500 ฿)</span></div>
+        <div class="tip-card"><span class="tip-icon">🏙</span><span>В городе до 60 км/ч</span></div>
+        <div class="tip-card"><span class="tip-icon">⛽</span><span>Бензин ~43 ฿/литр</span></div>
+        <div class="tip-card"><span class="tip-icon">🚦</span><span>Пробки в Патонге 8-10 и 17-19</span></div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <div class="footer-about">
+        <a href="https://thaigo.rent" target="_blank" rel="noopener" class="footer-logo-link">
+          <img src="https://thaigo.rent/wp-content/themes/wordpress-theme/img/logo.svg" alt="ThaiGo Rent — аренда байков на Пхукете" height="32" loading="lazy">
+        </a>
+        <p>ThaiGo Rent — аренда байков на Пхукете. Офис в Кароне. Скутеры от 100 ฿/день. Доставка в отель.</p>
+      </div>
+      <nav class="footer-links" aria-label="Навигация в подвале">
+        <a href="https://thaigo.rent/#book-form">Забронировать</a>
+        <a href="https://thaigo.rent/#catalog">Каталог байков</a>
+        <a href="https://thaigo.rent/#comments">Отзывы</a>
+        <a href="https://thaigo.rent/#faq">FAQ</a>
+        <a href="https://thaigo.rent/#contact-info">Контакты</a>
+      </nav>
+      <div class="footer-contacts">
+        <a href="https://wa.me/66822545737" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/ThaiGoSale1" target="_blank" rel="noopener">Telegram</a>
+        <span class="footer-copy">&copy; ThaiGo Rent</span>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- ===== NOSCRIPT FALLBACK ===== -->
+  <noscript>
+    <div style="padding:40px 20px;max-width:800px;margin:0 auto;font-family:sans-serif;color:#333">
+      <h1>Планировщик маршрутов по Пхукету на байке — ThaiGo Rent</h1>
+      <p>Для работы интерактивной карты необходим JavaScript. Включите JavaScript в настройках браузера и обновите страницу.</p>
+      <h2>Популярные маршруты по Пхукету</h2>
+      <ul>
+        <li><strong>Пляжи юга:</strong> Патонг — Карон — Ката — Най Харн — мыс Пхромтхеп (25 км, ~40 мин)</li>
+        <li><strong>Храмовый маршрут:</strong> Ват Чалонг — Большой Будда — Старый город (35 км, ~1 ч)</li>
+        <li><strong>Север острова:</strong> Бангтао — Сурин — Камала — Сиринат парк (30 км, ~50 мин)</li>
+      </ul>
+      <h2>Аренда байка — ThaiGo Rent</h2>
+      <p>Офис в Кароне. Скутеры от 100 ฿/день. Бронирование: <a href="https://wa.me/66822545737">WhatsApp</a> или <a href="https://t.me/ThaiGoSale1">Telegram</a>.</p>
+      <p><a href="https://thaigo.rent">thaigo.rent</a></p>
+    </div>
+  </noscript>
+
+  <!-- Toasts container -->
+  <div id="toasts"></div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <!-- Leaflet (must load sync — app scripts reference L.) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- App JS (defer preserves order; must load before Alpine) -->
+  <script defer src="js/data.js"></script>
+  <script defer src="js/stats.js"></script>
+  <script defer src="js/route.js"></script>
+  <script defer src="js/map.js"></script>
+  <script defer src="js/share.js"></script>
+  <script defer src="js/ui.js"></script>
+  <!-- Alpine.js (last — needs panelData() to be defined) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</body>
+</html>
