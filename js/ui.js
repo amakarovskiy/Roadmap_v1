@@ -198,10 +198,6 @@ function panelData() {
       // Init map after DOM ready
       this.$nextTick(function () {
         initMap();
-        // Ensure Leaflet recalculates size after layout
-        setTimeout(function () {
-          if (leafletMap) leafletMap.invalidateSize();
-        }, 100);
         // Restore route from URL
         var params = new URLSearchParams(window.location.search);
         if (params.get('route')) {
