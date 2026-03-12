@@ -16,6 +16,8 @@ var SVG_W = 600, SVG_H = 1000;
 var mapViewBox = { x: 0, y: 0, w: SVG_W, h: SVG_H };
 var mapDragging = false;
 var mapDragStart = { x: 0, y: 0, vx: 0, vy: 0 };
+var pinchStartDist = 0;
+var pinchStartViewBox = null;
 
 /* ===== GPS → SVG coordinate conversion ===== */
 function gpsToSvg(lat, lng) {
@@ -526,34 +528,106 @@ function initMapDrag() {
 
   document.addEventListener('mouseup', function() { mapDragging = false; });
 
-  // Touch support
+  // Touch support: 1 finger = pan, 2 fingers = pinch zoom
   svg.addEventListener('touchstart', function(e) {
-    if (e.touches.length !== 1) return;
     if (e.target.closest('.poi-marker')) return;
-    mapDragging = true;
-    var t = e.touches[0];
-    mapDragStart = { x: t.clientX, y: t.clientY, vx: mapViewBox.x, vy: mapViewBox.y };
     closePopup();
-  });
 
-  svg.addEventListener('touchmove', function(e) {
-    if (!mapDragging || e.touches.length !== 1) return;
-    e.preventDefault();
-    var t = e.touches[0];
-    var rect = svg.getBoundingClientRect();
-    var scaleX = mapViewBox.w / rect.width;
-    var scaleY = mapViewBox.h / rect.height;
-    mapViewBox.x = mapDragStart.vx - (t.clientX - mapDragStart.x) * scaleX;
-    mapViewBox.y = mapDragStart.vy - (t.clientY - mapDragStart.y) * scaleY;
-    applyViewBox();
+    if (e.touches.length === 2) {
+      // Start pinch zoom
+      mapDragging = false;
+      var dx = e.touches[0].clientX - e.touches[1].clientX;
+      var dy = e.touches[0].clientY - e.touches[1].clientY;
+      pinchStartDist = Math.sqrt(dx * dx + dy * dy);
+      pinchStartViewBox = { x: mapViewBox.x, y: mapViewBox.y, w: mapViewBox.w, h: mapViewBox.h };
+      e.preventDefault();
+    } else if (e.touches.length === 1) {
+      // Start pan
+      mapDragging = true;
+      pinchStartDist = 0;
+      var t = e.touches[0];
+      mapDragStart = { x: t.clientX, y: t.clientY, vx: mapViewBox.x, vy: mapViewBox.y };
+    }
   }, { passive: false });
 
-  svg.addEventListener('touchend', function() { mapDragging = false; });
+  svg.addEventListener('touchmove', function(e) {
+    e.preventDefault();
 
-  // Wheel zoom
+    if (e.touches.length === 2 && pinchStartDist > 0 && pinchStartViewBox) {
+      // Pinch zoom
+      var dx = e.touches[0].clientX - e.touches[1].clientX;
+      var dy = e.touches[0].clientY - e.touches[1].clientY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var scale = pinchStartDist / dist; // >1 = zoom out, <1 = zoom in
+
+      var newW = pinchStartViewBox.w * scale;
+      var newH = pinchStartViewBox.h * scale;
+
+      // Limit zoom
+      if (newW < 80) { newW = 80; newH = 80 * (SVG_H / SVG_W); }
+      if (newW > SVG_W * 2) { newW = SVG_W * 2; newH = SVG_H * 2; }
+
+      // Zoom towards pinch center
+      var rect = svg.getBoundingClientRect();
+      var midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      var midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      var svgMidX = pinchStartViewBox.x + ((midX - rect.left) / rect.width) * pinchStartViewBox.w;
+      var svgMidY = pinchStartViewBox.y + ((midY - rect.top) / rect.height) * pinchStartViewBox.h;
+
+      mapViewBox.w = newW;
+      mapViewBox.h = newH;
+      mapViewBox.x = svgMidX - ((midX - rect.left) / rect.width) * newW;
+      mapViewBox.y = svgMidY - ((midY - rect.top) / rect.height) * newH;
+      applyViewBox();
+      return;
+    }
+
+    if (mapDragging && e.touches.length === 1) {
+      // Pan
+      var t = e.touches[0];
+      var rect = svg.getBoundingClientRect();
+      var scaleX = mapViewBox.w / rect.width;
+      var scaleY = mapViewBox.h / rect.height;
+      mapViewBox.x = mapDragStart.vx - (t.clientX - mapDragStart.x) * scaleX;
+      mapViewBox.y = mapDragStart.vy - (t.clientY - mapDragStart.y) * scaleY;
+      applyViewBox();
+    }
+  }, { passive: false });
+
+  svg.addEventListener('touchend', function(e) {
+    if (e.touches.length < 2) {
+      pinchStartDist = 0;
+      pinchStartViewBox = null;
+    }
+    if (e.touches.length === 0) {
+      mapDragging = false;
+    }
+    // If switching from 2 fingers to 1, restart pan from current position
+    if (e.touches.length === 1) {
+      mapDragging = true;
+      var t = e.touches[0];
+      mapDragStart = { x: t.clientX, y: t.clientY, vx: mapViewBox.x, vy: mapViewBox.y };
+    }
+  });
+
+  // Wheel zoom (towards cursor)
   svg.addEventListener('wheel', function(e) {
     e.preventDefault();
-    svgMapZoom(e.deltaY < 0 ? 1 : -1);
+    var dir = e.deltaY < 0 ? 1 : -1;
+    var factor = dir > 0 ? 0.8 : 1.25;
+    var newW = mapViewBox.w * factor;
+    var newH = mapViewBox.h * factor;
+    if (newW < 80 || newW > SVG_W * 2) return;
+
+    var rect = svg.getBoundingClientRect();
+    var mouseX = mapViewBox.x + ((e.clientX - rect.left) / rect.width) * mapViewBox.w;
+    var mouseY = mapViewBox.y + ((e.clientY - rect.top) / rect.height) * mapViewBox.h;
+
+    mapViewBox.x = mouseX - ((e.clientX - rect.left) / rect.width) * newW;
+    mapViewBox.y = mouseY - ((e.clientY - rect.top) / rect.height) * newH;
+    mapViewBox.w = newW;
+    mapViewBox.h = newH;
+    applyViewBox();
   }, { passive: false });
 }
 
